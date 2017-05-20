@@ -14,7 +14,7 @@ struct bplustree_node
 		bplustree_node *parent;
 		bplustree_node *next;		
 };
-bplustree_node *root=NULL, *np=NULL, *x=NULL;
+bplustree_node *root=NULL, *np=NULL, *x=NULL, *left_most_leaf;
 
 bplustree_node* init()
 {
@@ -32,7 +32,7 @@ bplustree_node* init()
 
 bool search(int k)
 {
-	bplustree_node *temp=root;
+	bplustree_node *temp=left_most_leaf;
 	
 	while(temp!=NULL)
 	{
@@ -169,6 +169,7 @@ void insert(bplustree_node *x,int key)
 int main()
 {
 	root=init();
+	left_most_leaf=root;
 	int ch,key;
 	
 	while(true)
