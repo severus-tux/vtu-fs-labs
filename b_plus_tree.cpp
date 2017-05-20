@@ -44,6 +44,21 @@ bool search(int k)
 	return false;
 }
 
+void display_leaves()
+{
+	bplustree_node *temp=left_most_leaf;
+	
+	while(temp!=NULL)
+	{
+		cout<<"\033[31;1m[\033[0m";
+		for(int i=0;i<temp->n;i++)
+			cout<<" \033[32;1m"<<temp->data[i]<<"\033[0m ";
+		cout<<"\033[31;1m]\033[0m\033[32;1m-->\033[0m";
+		temp=temp->next;
+	}
+	cout<<"\033[34;1mNULL\033[0m\n";
+}
+
 void display ()	// level order traversal; with NULL as a marker for "\n"
 {
 	bplustree_node *queue[q_size];	// circular queue for level order traversal;
@@ -67,17 +82,17 @@ void display ()	// level order traversal; with NULL as a marker for "\n"
 			q_start=(q_start+1)%q_size;
 			continue;
 		}
-		cout <<"\033[1;31m [\033[0m";
+		cout <<"\033[31;1m [\033[0m";
 		temp=q_end;
 		for( i=0; i<queue[q_start]->n;i++)
 		{
-			cout <<" "<<queue[q_start]->data[i]<<" ";
+			cout <<" \033[32;1m"<<queue[q_start]->data[i]<<"\033[0m ";
 			if(queue[q_start]->child_ptr[i]!=NULL)	
 				queue[++q_end]=queue[q_start]->child_ptr[i];
 		}
 		if(queue[q_start]->child_ptr[i]!=NULL)	
 				queue[++q_end]=queue[q_start]->child_ptr[i];
-		cout <<"\033[1;31m]\033[0m";
+		cout <<"\033[31;1m]\033[0m";
 		q_start=(q_start+1)%q_size;
 	}
 	cout<<"\n\n";
@@ -178,8 +193,9 @@ int main()
 			<<"\t1.Insert\n"
 			<<"\t2.Search\n"
 			<<"\t3.Display\n"
-			<<"\t4.Exit\n"
-			<<"\n[1-4] : ";
+			<<"\t4.display leaves\n"
+			<<"\t5.Exit\n"
+			<<"\n[1-5] : ";
 		cin >> ch;
 		
 		switch(ch)
@@ -200,7 +216,9 @@ int main()
 			case 3 : 
 					display();
 				break;
-			case 4 : 
+			case 4 : display_leaves();
+				break;
+			case 5 :
 			default: return 0;
 		}
 	}
